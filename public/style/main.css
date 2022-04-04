@@ -1,0 +1,110 @@
+body {
+    background-color: gainsboro;
+}
+
+.main-panel {
+    margin: 0 auto;
+    width: 56em;
+    padding: 1em;
+    border-radius: 0 0 8px 8px;
+}
+
+.main-panel .upper {
+    margin-top: 8em;
+}
+
+.upper ul {
+    list-style: none;
+    display: flex;
+    gap: 1em;
+}
+
+.upper li button {
+    color: black;
+    padding: 0.5em;
+    background-color: white;
+    border: none;
+}
+
+.upper li button:hover {
+    color: cornflowerblue;
+}
+
+.upper li .active {
+    background-color: gainsboro;
+    border-radius: 4px;
+}
+
+.grades .grade-line {
+    display: flex;
+    border-bottom: 2px solid gainsboro;
+    align-items: center;
+    margin-top: 0.5em;
+}
+
+.grades .grade-line .sub {
+    font-size: large;
+    padding-right: 0.5em;
+    border-right: 2px solid gainsboro;
+    width: 8em;
+}
+
+.grades .grade-line p {
+    font-size: medium;
+    margin-right: 0.5em;
+}
+
+.grades .extra {
+    padding: 0.5em;
+    display: flex;
+}
+
+.grades .extra p {
+    margin-right: 0.5em;
+}
+
+.grades .extra .avg {
+    background-color: gainsboro;
+    padding: 0 0.35em;
+    border-radius: 4px;
+}
+
+.bad {
+    color: red;
+}
+
+.schedule {
+    padding: 0.5em;
+}
+
+.schedule .class {
+    padding: 0.5em;
+    border-bottom: 2px solid gainsboro;
+    height: 5em;
+}
+
+.schedule .class:first-child {
+    border-top: 2px solid gainsboro;
+}
+
+.schedule .class .info {
+    float: left;
+}
+
+.schedule .class .info2 {
+    float: right;
+}
+
+.diary:first-child {
+    border-top: none;
+}
+
+.diary {
+    padding: 0.25em;
+    border-top: 2px solid gainsboro;
+}
+
+.diary .extra {
+    display: flex;
+    gap: 2em;
+}
