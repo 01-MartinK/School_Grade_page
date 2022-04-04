@@ -3,6 +3,17 @@ const express = require('express');
 const path = require('path');
 const app = express();
 
+const temp_grades = [
+    { subject: "Mathematics", grades: [3, 2, 4, 3, 4, 4, 3, 5, 4] },
+    { subject: "Drugate", grades: [4, 4, 5, 5, 5, 5, 5] },
+    { subject: "Biology", grades: [4, 5, 4, 5, 5, 5, 3, 4, 5] },
+]
+
+const temp_classes = [
+    { name: "proga", time: "14.00-16.00", subjects: ["math", "programming"], teacher: "Margit Mägi" },
+    { name: "Matta", time: "17.00-18.00", subjects: ["trigonometry", "simple equations"], teacher: "Anne mootse" },
+]
+
 // bodyParser Use
 const bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -17,6 +28,14 @@ app.use(express.static(__dirname + '/public'))
 app.get('/', (req, res) => {
     res.render('index');
 });
+
+app.get('/API/GRADES', (req, res) => {
+    res.send(temp_grades)
+})
+
+app.get('/API/SCHEDULE', (req, res) => {
+    res.send(temp_classes)
+})
 
 const server = app.listen(3010, () => {
     console.log(`Express running -> PORT ${server.address().port}`)

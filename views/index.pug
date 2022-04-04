@@ -1,4 +1,21 @@
 extends default 
 
 block content 
-    h1 test
+    .cont
+        include _nav_side
+        .main-panel.bg-white
+            .split
+                .upper
+                    ul
+                        li 
+                            button(onclick="showTp()").active#tpBtn Tunniplaan 
+                        li 
+                            button(onclick="showP()")#pBtn Päevik
+                        li 
+                            button(onclick="showH()")#hBtn Hinded
+                    hr
+                .lower
+                    include modules/_module_grades
+                    include modules/_module_schedule
+        script(src="/js/kutseope.js")
+
