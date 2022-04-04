@@ -6,8 +6,8 @@ const app = express();
 app.use(cors())        // Avoid CORS errors in browsers
 app.use(express.json()) // Populate req.body
 const users = [
-    {id: 1, username: "Admin", password: "Password", isAdmin: true},
-    {id: 2, username: "User", password: "Password", isAdmin: false}
+    {personalId: null, name: "Admin", password: "Password", isAdmin: true, email: null, school: null},
+    {personalId: null, name: "User", password: "Password", isAdmin: false, email: null, school: null}
 ]
 
 let sessions = []
@@ -46,48 +46,46 @@ Array.prototype.findBy = function (field, value) {
         return x[field] === value;
     })
 }
-app.get('/users', (req, res) => {
-    res.status(200).send(users)
+app.get('/', (req, res) => {
+    res.status(200).end()
 })
 
 app.post('/users', (req, res) => {
-    if (!req.body.username || !req.body.password) {
-        return res.status(400).send({error: 'One or all params are missing'})
+    if (!req.body.name || !req.body.password || !req.body.personalId || !req.body.email || !req.body.school) {
+        return res.status(400).send({error: 'One or multiple params are missing'})
     }
-
-    let user = users.findBy('username', req.body.username);
-    if (user) {
-        return res.status(409).send({error: 'Conflict: The user already exists. '})
+    let personalId = users.findBy('personalId', req.body.personalId);
+    if (personalId) {
+        return res.status(409).send({error: 'Conflict: The personal Id already exists. '})
     }
-    users.push({id: users.length + 1, username: req.body.username, password: req.body.password, isAdmin: false})
-
-    user = users.findById(users.length);
+    users.push({personalId: req.body.personalId, name: req.body.name, password: req.body.password, isAdmin: false, email: req.body.email, school: req.body.school})
+    user = users.findBy('personalId', req.body.personalId);
     let newSession = {
-        id: sessions.length + 1,
-        userId: user.id
+        userId: user.personalId,
+        id: req.body.email
     }
     sessions.push(newSession)
-    res.status(201).send({sessionId: sessions.length})
+    res.status(201).send({sessionId: sessions.findBy('id', req.body.email).userId })
 })
 app.post('/sessions', (req, res) => {
-    if (!req.body.username || !req.body.password) {
+    if (!req.body.email || !req.body.password) {
         return res.status(400).send({error: 'One or all params are missing'})
     }
-    const user = users.find((user) => user.username === req.body.username && user.password === req.body.password);
+    const user = users.find((user) => user.email === req.body.email && user.password === req.body.password);
     if (!user) {
-        return res.status(401).send({error: 'Unauthorized: username or password is incorrect'})
+        return res.status(401).send({error: 'Unauthorized: email or password is incorrect'})
     }
     let newSession = {
-        id: sessions.length + 1,
-        userId: user.id
+        userId: user.personalId,
+        id: req.body.email
     }
     sessions.push(newSession)
     res.status(201).send(
-        {sessionId: sessions.length}
+        {sessionId: sessions.findBy('id', req.body.email).userId}
     )
 })
 app.delete('/sessions', (req, res) => {
-    sessions = sessions.filter((session) => session.id === req.body.sessionId);
+    sessions = sessions.filter((session) => session.userId === req.body.sessionId);
     res.status(200).end()
 })
 // bodyParser Use
