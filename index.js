@@ -10,8 +10,13 @@ const temp_grades = [
 ]
 
 const temp_classes = [
-    { name: "proga", time: "14.00-16.00", subjects: ["math", "programming"], teacher: "Margit Mägi" },
+    { name: "Proga", time: "14.00-16.00", subjects: ["math", "programming"], teacher: "Margit Mägi" },
     { name: "Matta", time: "17.00-18.00", subjects: ["trigonometry", "simple equations"], teacher: "Anne mootse" },
+]
+
+const temp_letters = [
+    { text: "lorem jasopidjasopidj aspod jasüp djaspodj aspo djpaosjd poasjd poaj dpojasp odjas d", teacher: "Margit Mägi", class: "Proga" },
+    { text: "lorem jasopidjasopidj aspod jasüp djaspodj aspo djpaosjd poasjd poaj dpojasp odjas d", teacher: "Anne Mootse", class: "Mathematics" },
 ]
 
 // bodyParser Use
@@ -35,6 +40,10 @@ app.get('/API/GRADES', (req, res) => {
 
 app.get('/API/SCHEDULE', (req, res) => {
     res.send(temp_classes)
+})
+
+app.get('/API/LETTERS', (req, res) => {
+    res.send(temp_letters)
 })
 
 const server = app.listen(3010, () => {

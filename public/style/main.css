@@ -54,6 +54,21 @@ body {
     margin-right: 0.5em;
 }
 
+.grades .extra {
+    padding: 0.5em;
+    display: flex;
+}
+
+.grades .extra p {
+    margin-right: 0.5em;
+}
+
+.grades .extra .avg {
+    background-color: gainsboro;
+    padding: 0 0.35em;
+    border-radius: 4px;
+}
+
 .bad {
     color: red;
 }
@@ -64,9 +79,12 @@ body {
 
 .schedule .class {
     padding: 0.5em;
-    border-top: 2px solid gainsboro;
     border-bottom: 2px solid gainsboro;
     height: 5em;
+}
+
+.schedule .class:first-child {
+    border-top: 2px solid gainsboro;
 }
 
 .schedule .class .info {
@@ -75,4 +93,18 @@ body {
 
 .schedule .class .info2 {
     float: right;
+}
+
+.diary:first-child {
+    border-top: none;
+}
+
+.diary {
+    padding: 0.25em;
+    border-top: 2px solid gainsboro;
+}
+
+.diary .extra {
+    display: flex;
+    gap: 2em;
 }

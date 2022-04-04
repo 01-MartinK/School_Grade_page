@@ -4,11 +4,10 @@ async function genGrades() {
     const list = document.querySelector('.grades')
     let html = ''
     let grades = ''
+    let avg = 0
 
     grades = await (await fetch('http://localhost:3010/API/GRADES')).json()
         .then(result => {
-            console.log(result)
-            console.log(result[0].subject)
             result.forEach(element => {
                 grades += `<p class="sub">${element.subject}</p>`
                 element.grades.forEach(grade => {
@@ -16,6 +15,7 @@ async function genGrades() {
                         grades += `<p class="bad">${grade}</p>`;
                     else
                         grades += `<p>${grade}</p>`;
+                    avg += grade
                 })
 
                 html += `
@@ -25,7 +25,12 @@ async function genGrades() {
                         `
                 grades = ''
                 console.log(element)
+                avg = Math.round(avg / element.grades.length)
             });
+            html += `<div class="extra">
+                <p>keskmine</p>
+                <p class="avg">${avg}</p>
+            </div>`
             list.innerHTML = html
         })
 }
@@ -33,7 +38,7 @@ async function genGrades() {
 async function genSchedule() {
     const list = document.querySelector(".scheduleList")
     let schedule
-    html = ""
+    let html = ""
 
     schedule = await (await fetch('http://localhost:3010/API/SCHEDULE')).json()
         .then(result => {
@@ -54,9 +59,32 @@ async function genSchedule() {
 
 }
 
+async function genLetter() {
+    const testlist = document.querySelector('.diaryList')
+    let letters
+    let html = ""
+
+    letters = await (await fetch('http://localhost:3010/API/LETTERS')).json()
+        .then(result => {
+            result.forEach(element => {
+                console.log(result)
+                html += `<div class="diary">
+                        <h5>${element.text}</h5>
+                        <div class="extra">
+                            <p>${element.class}</p>
+                            <p>${element.teacher}</p>
+                        </div>
+                </div>`
+            })
+            testlist.innerHTML = html
+        })
+}
+
 genGrades()
 
 genSchedule()
+
+genLetter()
 
 function showH() {
     document.querySelector(".grades").classList.remove("d-none")
