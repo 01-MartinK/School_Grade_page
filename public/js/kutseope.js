@@ -6,8 +6,16 @@ async function genGrades() {
     let grades = ''
     let avg = 0
     let grades_together = 0
+    const localId = localStorage.getItem("sessionId")
+    const data = { sessionId: localId };
+    grades = await (await fetch('http://localhost:3010/API/GRADES', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
 
-    grades = await (await fetch('http://localhost:3010/API/GRADES')).json()
+    })).json()
         .then(result => {
             result.forEach(element => {
                 grades += `<p class="sub">${element.subject}</p>`
@@ -100,6 +108,7 @@ async function genLetter() {
     letters = await (await fetch('http://localhost:3010/API/LETTERS')).json()
         .then(result => {
             result.forEach(element => {
+                console.log(result)
                 html += `<div class="diary">
                         <h5>${element.text}</h5>
                         <div class="extra">
@@ -112,38 +121,104 @@ async function genLetter() {
         })
 }
 
+
+async function genLeaderboard() {
+    const leaderboard = document.querySelector('.leaderboardList')
+    let lessons
+    let html = ""
+    let grades = ''
+    let avg = 0
+    let grades_together = 0
+    let count = 0
+    const localId = localStorage.getItem("sessionId")
+    const data = { sessionId: localId };
+    grades = await (await fetch('http://localhost:3010/API/GRADES', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+
+    })).json()
+        .then(result => {
+            result.forEach(element => {
+                element.grades.forEach(grade => {
+                    avg += grade
+                    grades_together += 1
+                })
+            });
+            avg = Math.round(avg / grades_together)
+        })
+    lessons = await (await fetch('http://localhost:3010/API/LEADERBOARD')).json()
+        .then(result => {
+            result.forEach(element => {
+                console.log(result)
+                count += 1
+                html += `<div class="leaderboard">
+                        ${count}.
+                        <h5>${element.text}</h5>
+                        <div class="extra">
+                            <p>${element.student}</p>
+                        </div>
+                </div>
+<div class="extra">
+                <p>keskmine</p>
+                <p class="avg">${avg}</p>
+            </div>`
+            })
+        })
+    leaderboard.innerHTML = html
+}
+
 genGrades()
 
 genSchedule()
 
 genLetter()
 
+genLeaderboard()
 function showH() {
     document.querySelector("#hBtn").classList.add("active")
     document.querySelector("#pBtn").classList.remove("active")
     document.querySelector("#tpBtn").classList.remove("active")
-
+    document.querySelector("#lBtn").classList.remove("active")
     document.querySelector(".grades").classList.remove("d-none")
     document.querySelector(".schedule").classList.add("d-none")
     document.querySelector(".diary").classList.add("d-none")
+    document.querySelector(".leaderboard").classList.add("d-none")
+
 }
 
 function showTp() {
     document.querySelector("#hBtn").classList.remove("active")
     document.querySelector("#pBtn").classList.remove("active")
     document.querySelector("#tpBtn").classList.add("active")
-
+  
+    document.querySelector("#lBtn").classList.remove("active")
     document.querySelector(".grades").classList.add("d-none")
     document.querySelector(".schedule").classList.remove("d-none")
     document.querySelector(".diary").classList.add("d-none")
+    document.querySelector(".leaderboard").classList.add("d-none")
 }
 
 function showP() {
     document.querySelector("#hBtn").classList.remove("active")
     document.querySelector("#pBtn").classList.add("active")
     document.querySelector("#tpBtn").classList.remove("active")
-
+    document.querySelector("#lBtn").classList.remove("active")
     document.querySelector(".grades").classList.add("d-none")
     document.querySelector(".schedule").classList.add("d-none")
     document.querySelector(".diary").classList.remove("d-none")
+    document.querySelector(".leaderboard").classList.add("d-none")
+}
+
+function showL() {
+    document.querySelector("#hBtn").classList.remove("active")
+    document.querySelector("#pBtn").classList.remove("active")
+    document.querySelector("#tpBtn").classList.remove("active")
+    document.querySelector("#lBtn").classList.add("active")
+    document.querySelector(".grades").classList.add("d-none")
+    document.querySelector(".schedule").classList.add("d-none")
+    document.querySelector(".diary").classList.add("d-none")
+    document.querySelector(".leaderboard").classList.remove("d-none")
 }
