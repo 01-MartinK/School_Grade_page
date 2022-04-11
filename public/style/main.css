@@ -136,3 +136,17 @@ body {
     display: flex;
     gap: 2em;
 }
+
+.leaderboard:first-child {
+    border-top: none;
+}
+
+.leaderboard {
+    padding: 0.25em;
+    border-top: 2px solid gainsboro;
+}
+
+.leaderboard .extra {
+    display: flex;
+    gap: 2em;
+}

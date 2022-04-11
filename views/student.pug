@@ -1,22 +1,173 @@
-extends default 
+extends default
 
-block content 
+block content
     .cont
-        include _nav_side
-        .main-panel.bg-white
-            .split
-                .upper
-                    ul
-                        li 
-                            button(onclick="showTp()").active#tpBtn Tunniplaan 
-                        li 
-                            button(onclick="showP()")#pBtn Päevik
-                        li 
-                            button(onclick="showH()")#hBtn Hinded
-                    hr
-                .lower
-                    include modules/_module_grades
-                    include modules/_module_schedule
-                    include modules/_module_diary
-        script(src="/js/kutseope.js")
+    // suppress XmlDuplicatedId
+    head
+        meta(charset='UTF-8')
+        meta(name='viewport' content='width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0')
+        meta(http-equiv='X-UA-Compatible' content='ie=edge')
+        title Document
+        // CSS only
+        link(href='https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css' rel='stylesheet' integrity='sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3' crossorigin='anonymous')
+    #app
+        #loginModal(tabindex='-1')
+            .modal-dialog
+                .modal-content
+                    .modal-header
+                        button.btn-close(aria-label='Close' data-bs-dismiss='modal' type='button')
+                    .modal-body
+                        p Please fill out the login details:
+                        br
+                        form
+                            label(for='email') Email:
+                            br
+                            input#email(name='email' type='text' v-model='email')
+                            br
+                            label(for='password') Password:
+                            br
+                            input#password(name='password' type='password' v-model='password')
+                    .modal-footer
+                        button.btn.btn-secondary(data-bs-dismiss='modal' type='button') Close
+                        button.btn.btn-secondary(@click='showRegisterModal' data-bs-dismiss='modal' type='button') Register
+                        button.btn.btn-primary(@click='logIn' type='button') Confirm login
+        #showRegisterModal.modal(tabindex='-1')
+            .modal-dialog
+                .modal-content
+                    .modal-header
+                        button.btn-close(aria-label='Close' data-bs-dismiss='modal' type='button')
+                    .modal-body
+                        p Please fill out the registration details:
+                        br
+                        form
+                            label(for='name') Name:
+                            br
+                            input#name(name='name' type='text' v-model='name')
+                            br
+                            label(for='password') Password:
+                            br
+                            input#password(name='password' type='password' v-model='password')
+                            br
+                            label(for='personalId') Personal ID (isikukood):
+                            br
+                            input#personalId(name='personalId' type='text' v-model='personalId')
+                            br
+                            label(for='email') Email:
+                            br
+                            input#email(name='email' type='text' v-model='email')
+                            br
+                            label(for='school') school:
+                            br
+                            input#school(name='school' type='text' v-model='school')
+                            br
+                    .modal-footer
+                        button.btn.btn-secondary(data-bs-dismiss='modal' type='button') Close
+                        button.btn.btn-secondary(@click='register' type='button') Register
+    script(src='https://unpkg.com/vue@3.2.31/dist/vue.global.js')
+    script(src='https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js' integrity='sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13' crossorigin='anonymous')
+    script.
+        function tryToParseJSON(jsonString) {
+            try {
+                let o = JSON.parse(jsonString);
+                if (o && typeof o === "object") {
+                    return o;
+                }
+            } catch (e) {
+            }
+            return '';
+        }
+        const vue = Vue.createApp({
+            data() {
+                return {
+                    users: [],
+                    modalHandler: null,
+                    name: null,
+                    password: null,
+                    sessionId: null,
+                    personalId: null,
+                    email: null,
+                    school: null
+                }
+            },
+            async created() {
+                this.sessionId = localStorage.getItem("sessionId");
+            },
+            methods: {
+                showRegisterModal: function () {
+                    this.modalHandler = new bootstrap.Modal(document.getElementById('showRegisterModal'), {})
+                    this.modalHandler.show()
+                }
+                ,
+                logIn: async function () {
+                    let response = await this.send('POST', `http://localhost:3010/sessions`, {
+                        email: this.email,
+                        password: this.password
+                    });
+                    if (response.ok) {
+                        this.sessionId = response.body.sessionId;
+                        localStorage.setItem("sessionId", this.sessionId);
+                        location.href = "http://localhost:3010/student/kutseope";
+                    }
+                }
+                ,
+                register: async function () {
+                    let response = await this.send('POST', `http://localhost:3010/users`, {
+                        name: this.name,
+                        password: this.password,
+                        personalId: this.personalId,
+                        email: this.email,
+                        school: this.school
+                    });
+                    if (response.ok) {
+                        this.sessionId = response.body.sessionId;
+                        localStorage.setItem("sessionId", this.sessionId);
+                        this.modalHandler.hide()
+                        alert("The registration was a success!");
+                    }
+                }
+                ,
+                logout: async function () {
+                    let response = await this.send('DELETE', `http://localhost:3010/sessions`, {
+                        sessionId: this.sessionId
+                    });
+                    if (response.ok) {
+                        this.sessionId = null;
+                        localStorage.clear();
+                        this.modalHandler.hide();
+                    }
+                }
+                ,
+                send: function (method, url, body) {
+                    async function CheckError(response) {
+                        if (response.status >= 200 && response.status <= 299) {
+                            let responseText = await response.text()
+                            return {ok: true, status: response.status, body: tryToParseJSON(responseText)}
+                        } else {
+                            let responseText = await response.text()
+                            let responseObject = tryToParseJSON(responseText)
+                            if (typeof responseObject === 'object' && typeof responseObject.error === 'string') {
+                                alert('Error code ' + response.status + ":\\n" + responseObject.error)
+                            } else {
+                                alert('Error code ' + response.status + ":\\n" + responseText)
+                            }
+                            return {ok: false, status: response.status, body: responseObject || responseText}
+                        }
+                    }
+
+                    return fetch(url, {
+                        method: method,
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(body)
+                    })
+                        .then(CheckError)
+                        .then((jsonResponse) => {
+                            return jsonResponse
+                        }).catch((error) => {
+                            throw Error('Network error: ' + error);
+                        });
+                }
+            },
+        }).mount('#app')
 
