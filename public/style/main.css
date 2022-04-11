@@ -67,10 +67,8 @@ body {
     background-color: gainsboro;
     padding: 0 0.35em;
     border-radius: 4px;
-    border-bottom: 2px solid gray;
 }
-
-.classes .classesList .class {
+.grades .classes .classesList .class {
     display: flex;
     background-color: gray;
     padding: 1em;
@@ -78,24 +76,17 @@ body {
     margin-top: 0.5rem;
 }
 
-.classes .classesList .classFailed {
+.grades .classes .classesList .classFailed {
     background-color: lightcoral;
 }
 
-.classes .classesList .classCompleted {
+.grades .classes .classesList .classCompleted {
     background-color: lightgreen;
 }
 
-.classes .classesList .class h5 {
+.grades .classes .classesList .class h5 {
     margin-right: 1em;
 }
-
-.classes .classesList .class h6 {
-    align-self: center;
-    margin-right: 1em;
-}
-
-.classes .classesList .class button {}
 
 .bad {
     color: red;
@@ -133,6 +124,61 @@ body {
 }
 
 .diary .extra {
+    display: flex;
+    gap: 2em;
+}
+
+.leaderboard:first-child {
+    border-top: none;
+}
+
+.leaderboard {
+    padding: 0.25em;
+    border-top: 2px solid gainsboro;
+}
+
+.leaderboard .extra {
+    display: flex;
+    gap: 2em;
+}
+
+.students:first-child {
+    border-top: none;
+}
+
+.students {
+    padding: 0.25em;
+    border-top: 2px solid gainsboro;
+}
+
+.students .extra {
+    display: flex;
+    gap: 2em;
+}
+.teachers:first-child {
+    border-top: none;
+}
+
+.teachers {
+    padding: 0.25em;
+    border-top: 2px solid gainsboro;
+}
+
+.teachers .extra {
+    display: flex;
+    gap: 2em;
+}
+
+.subjects:first-child {
+    border-top: none;
+}
+
+.subjects {
+    padding: 0.25em;
+    border-top: 2px solid gainsboro;
+}
+
+.subjects .extra {
     display: flex;
     gap: 2em;
 }
