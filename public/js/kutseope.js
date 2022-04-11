@@ -1,10 +1,11 @@
 let grades = []
 
 async function genGrades() {
-    const list = document.querySelector('.grades')
+    const list = document.querySelector('.gradesList')
     let html = ''
     let grades = ''
     let avg = 0
+    let grades_together = 0
 
     grades = await (await fetch('http://localhost:3010/API/GRADES')).json()
         .then(result => {
@@ -16,6 +17,7 @@ async function genGrades() {
                     else
                         grades += `<p>${grade}</p>`;
                     avg += grade
+                    grades_together += 1
                 })
 
                 html += `
@@ -24,15 +26,46 @@ async function genGrades() {
                             </div>
                         `
                 grades = ''
-                console.log(element)
-                avg = Math.round(avg / element.grades.length)
             });
+            avg = Math.round(avg / grades_together)
             html += `<div class="extra">
                 <p>keskmine</p>
                 <p class="avg">${avg}</p>
             </div>`
             list.innerHTML = html
         })
+
+
+    html = ''
+
+    const subject_list = document.querySelector('.classesList')
+    await (await fetch('http://localhost:3010/API/SUBJECT_BY_USER')).json()
+        .then(result => {
+            console.log(result)
+            result.forEach(element => {
+                if (element.progress == "läbikukkunud") {
+                    html += `
+                <div class="classFailed class">
+                    <h5>${element.name}</h5>
+                    <h5>${element.progress}</h5>
+                </div>`
+                } else if (element.progress == "läbitud") {
+                    html += `
+                <div class="classCompleted class">
+                    <h5>${element.name}</h5>
+                    <h5>${element.progress}</h5>
+                </div>`
+                } else {
+                    html += `
+                <div class="class">
+                    <h5>${element.name}</h5>
+                    <h5>${element.progress}</h5>
+                </div>`
+                }
+            })
+            subject_list.innerHTML = html
+        })
+
 }
 
 async function genSchedule() {
@@ -80,26 +113,93 @@ async function genLetter() {
         })
 }
 
+async function genLeaderboard() {
+    const leaderboard = document.querySelector('.leaderboardList')
+    let lessons
+    let html = ""
+    let grades = ''
+    let avg = 0
+    let grades_together = 0
+    let count = 0
+    grades = await (await fetch('http://localhost:3010/API/GRADES')).json()
+        .then(result => {
+            result.forEach(element => {
+                element.grades.forEach(grade => {
+                    avg += grade
+                    grades_together += 1
+                })
+            });
+            avg = Math.round(avg / grades_together)
+        })
+    lessons = await (await fetch('http://localhost:3010/API/LEADERBOARD')).json()
+        .then(result => {
+            result.forEach(element => {
+                console.log(result)
+                count += 1
+                html += `<div class="leaderboard">
+                        ${count}.
+                        <h5>${element.text}</h5>
+                        <div class="extra">
+                            <p>${element.student}</p>
+                        </div>
+                </div>
+<div class="extra">
+                <p>keskmine</p>
+                <p class="avg">${avg}</p>
+            </div>`
+            })
+        })
+    leaderboard.innerHTML = html
+}
+
 genGrades()
 
 genSchedule()
 
 genLetter()
 
+genLeaderboard()
+
 function showH() {
+    document.querySelector("#hBtn").classList.add("active")
+    document.querySelector("#pBtn").classList.remove("active")
+    document.querySelector("#tpBtn").classList.remove("active")
+    document.querySelector("#lBtn").classList.remove("active")
     document.querySelector(".grades").classList.remove("d-none")
     document.querySelector(".schedule").classList.add("d-none")
     document.querySelector(".diary").classList.add("d-none")
+    document.querySelector(".leaderboard").classList.add("d-none")
 }
 
 function showTp() {
+    document.querySelector("#hBtn").classList.remove("active")
+    document.querySelector("#pBtn").classList.remove("active")
+    document.querySelector("#tpBtn").classList.add("active")
+    document.querySelector("#lBtn").classList.remove("active")
     document.querySelector(".grades").classList.add("d-none")
     document.querySelector(".schedule").classList.remove("d-none")
     document.querySelector(".diary").classList.add("d-none")
+    document.querySelector(".leaderboard").classList.add("d-none")
 }
 
 function showP() {
+    document.querySelector("#hBtn").classList.remove("active")
+    document.querySelector("#pBtn").classList.add("active")
+    document.querySelector("#tpBtn").classList.remove("active")
+    document.querySelector("#lBtn").classList.remove("active")
     document.querySelector(".grades").classList.add("d-none")
     document.querySelector(".schedule").classList.add("d-none")
     document.querySelector(".diary").classList.remove("d-none")
+    document.querySelector(".leaderboard").classList.add("d-none")
+}
+
+function showL() {
+    document.querySelector("#hBtn").classList.remove("active")
+    document.querySelector("#pBtn").classList.remove("active")
+    document.querySelector("#tpBtn").classList.remove("active")
+    document.querySelector("#lBtn").classList.add("active")
+    document.querySelector(".grades").classList.add("d-none")
+    document.querySelector(".schedule").classList.add("d-none")
+    document.querySelector(".diary").classList.add("d-none")
+    document.querySelector(".leaderboard").classList.remove("d-none")
 }
