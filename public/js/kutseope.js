@@ -6,8 +6,16 @@ async function genGrades() {
     let grades = ''
     let avg = 0
     let grades_together = 0
+    const localId = localStorage.getItem("sessionId")
+    const data = { sessionId: localId };
+    grades = await (await fetch('http://localhost:3010/API/GRADES', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
 
-    grades = await (await fetch('http://localhost:3010/API/GRADES')).json()
+    })).json()
         .then(result => {
             result.forEach(element => {
                 grades += `<p class="sub">${element.subject}</p>`
@@ -121,7 +129,16 @@ async function genLeaderboard() {
     let avg = 0
     let grades_together = 0
     let count = 0
-    grades = await (await fetch('http://localhost:3010/API/GRADES')).json()
+    const localId = localStorage.getItem("sessionId")
+    const data = { sessionId: localId };
+    grades = await (await fetch('http://localhost:3010/API/GRADES', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+
+    })).json()
         .then(result => {
             result.forEach(element => {
                 element.grades.forEach(grade => {

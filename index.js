@@ -6,21 +6,30 @@ const app = express();
 app.use(cors())        // Avoid CORS errors in browsers
 app.use(express.json()) // Populate req.body
 const users = [
-    {personalId: null, name: "Admin", password: "Password", isAdmin: true, email: null, school: null},
-    {personalId: null, name: "User", password: "Password", isAdmin: false, email: null, school: null}
+    {personalId: '0', name: "Admin", password: "Pass", isAdmin: true, email: 'Admin', school: 'Admin School'},
+    {personalId: '1', name: "Kevin Hartman", password: "Pass", isAdmin: false, email: 'User', school: 'User School'}
 ]
 
-let sessions = []
+let sessions = [
+    {
+        userId: '0',
+        id: 'Admin'
+    },
+    {
+        userId: '1',
+        id: 'User'
+    }
+]
 
 
 
 const temp_grades = [
-    { subject: "Mathematics", grades: [3, 2, 4, 3, 4, 4, 3, 5, 4] },
-    { subject: "Matemaatika", grades: [3, 2, 4, 3, 4, 4, 3, 5, 4] },
-    { subject: "Drugate", grades: [4, 4, 5, 5, 5, 5, 5] },
-    { subject: "Keemia", grades: [4, 4, 5, 5, 5, 5, 5] },
-    { subject: "Biology", grades: [4, 5, 4, 5, 5, 5, 3, 4, 5] },
-    { subject: "Bioloogia", grades: [4, 5, 4, 5, 5, 5, 3, 4, 5] },
+    { personalId: '1', subject: "Mathematics", grades: [3, 2, 4, 3, 4, 4, 3, 5, 4] },
+    { personalId: '1', subject: "Matemaatika", grades: [3, 2, 4, 3, 4, 4, 3, 5, 4] },
+    { personalId: '1', subject: "Drugate", grades: [4, 4, 5, 5, 5, 5, 5] },
+    { personalId: '1', subject: "Keemia", grades: [4, 4, 5, 5, 5, 5, 5] },
+    { personalId: '1', subject: "Biology", grades: [4, 5, 4, 5, 5, 5, 3, 4, 5] },
+    { personalId: '1', subject: "Bioloogia", grades: [4, 5, 4, 5, 5, 5, 3, 4, 5] },
 ]
 
 const temp_classes = [
@@ -144,8 +153,9 @@ app.get('/student/kutseope', (req, res) => {
 app.get('/student/info', (req, res) => {
     res.render('student_info');
 });
-app.get('/API/GRADES', (req, res) => {
-    res.send(temp_grades)
+app.post('/API/GRADES', (req, res) => {
+    let temp_grades2 = temp_grades.filter((grade) => grade.personalId === (req.body.sessionId));
+    res.send(temp_grades2)
 })
 
 app.get('/API/SCHEDULE', (req, res) => {

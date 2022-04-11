@@ -106,8 +106,7 @@ block content
                     if (response.ok) {
                         this.sessionId = response.body.sessionId;
                         localStorage.setItem("sessionId", this.sessionId);
-                        this.modalHandler.hide()
-                            location.href = "http://localhost:3010/student/kutseope";
+                        location.href = "http://localhost:3010/student/kutseope";
                     }
                 }
                 ,
