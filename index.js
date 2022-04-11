@@ -142,35 +142,22 @@ app.set('view engine', 'pug');
 app.use(express.static(__dirname + '/public'))
 
 // render default page
-app.get('/', (req, res) => {
-    res.render('index');
-});
-
-// render school page
 app.get('/student/kutseope', (req, res) => {
-    res.render('schoolPage');
+    res.render('student');
 });
-app.get('/student/info', (req, res) => {
-    res.render('student_info');
-});
-app.post('/API/GRADES', (req, res) => {
-    let temp_grades2 = temp_grades.filter((grade) => grade.personalId === (req.body.sessionId));
-    res.send(temp_grades2)
-})
 
-app.get('/API/SCHEDULE', (req, res) => {
-    res.send(temp_classes)
-})
-
-app.get('/API/LETTERS', (req, res) => {
-    res.send(temp_letters)
-})
-app.get('/API/SUBJECT_BY_USER', (req, res) => {
-    res.send(temp_subjects)
-})
 app.get('/API/LEADERBOARD', (req, res) => {
     res.send(temp_scores)
 })
+
+app.get('/student/info', (req, res) => {
+    res.render('student_info');
+});
+
+const APIRouter = require('./routers/api');
+
+app.use('/API', APIRouter);
+
 const server = app.listen(3010, () => {
     console.log(`Express running -> PORT ${server.address().port}`)
 });

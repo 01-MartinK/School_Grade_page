@@ -121,6 +121,7 @@ async function genLetter() {
         })
 }
 
+
 async function genLeaderboard() {
     const leaderboard = document.querySelector('.leaderboardList')
     let lessons
@@ -176,7 +177,6 @@ genSchedule()
 genLetter()
 
 genLeaderboard()
-
 function showH() {
     document.querySelector("#hBtn").classList.add("active")
     document.querySelector("#pBtn").classList.remove("active")
@@ -186,12 +186,14 @@ function showH() {
     document.querySelector(".schedule").classList.add("d-none")
     document.querySelector(".diary").classList.add("d-none")
     document.querySelector(".leaderboard").classList.add("d-none")
+
 }
 
 function showTp() {
     document.querySelector("#hBtn").classList.remove("active")
     document.querySelector("#pBtn").classList.remove("active")
     document.querySelector("#tpBtn").classList.add("active")
+  
     document.querySelector("#lBtn").classList.remove("active")
     document.querySelector(".grades").classList.add("d-none")
     document.querySelector(".schedule").classList.remove("d-none")
