@@ -7,10 +7,11 @@ block content
                 .upper
                     ul
                         li 
-                            button(onclick="showTp()").active#tpBtn Tunniplaan 
+                            button(onclick="showOp()").active#OpBtn Õpetajad
                         li 
-                            button(onclick="showP()")#pBtn Päevik
-                        li 
-                            button(onclick="showH()")#hBtn Hinded
+                            button(onclick="showK()")#KBtn Kursused
                     hr
                 .lower
+                    include modules/_module_extra_subjects
+                    include modules/_module_teachers
+            script(src="/js/info.js")
