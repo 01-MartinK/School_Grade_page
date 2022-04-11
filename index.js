@@ -4,9 +4,9 @@ const path = require('path');
 const app = express();
 
 const temp_grades = [
-    { subject: "Mathematics", grades: [3, 2, 4, 3, 4, 4, 3, 5, 4] },
-    { subject: "Drugate", grades: [4, 4, 5, 5, 5, 5, 5] },
-    { subject: "Biology", grades: [4, 5, 4, 5, 5, 5, 3, 4, 5] },
+    { subject: "Matemaatika", grades: [3, 2, 4, 3, 4, 4, 3, 5, 4] },
+    { subject: "Keemia", grades: [4, 4, 5, 5, 5, 5, 5] },
+    { subject: "Bioloogia", grades: [4, 5, 4, 5, 5, 5, 3, 4, 5] },
 ]
 
 const temp_classes = [
@@ -17,6 +17,12 @@ const temp_classes = [
 const temp_letters = [
     { text: "lorem jasopidjasopidj aspod jasüp djaspodj aspo djpaosjd poasjd poaj dpojasp odjas d", teacher: "Margit Mägi", class: "Proga" },
     { text: "lorem jasopidjasopidj aspod jasüp djaspodj aspo djpaosjd poasjd poaj dpojasp odjas d", teacher: "Anne Mootse", class: "Mathematics" },
+]
+
+const temp_subjects = [
+    { name: "Keemia", progress: "läbitud" },
+    { name: "Matemaatika", progress: "pooleli" },
+    { name: "Eesti keel", progress: "läbikukkunud" }
 ]
 
 // bodyParser Use
@@ -30,8 +36,12 @@ app.set('view engine', 'pug');
 app.use(express.static(__dirname + '/public'))
 
 // render default page
-app.get('/', (req, res) => {
+app.get('/student/kutseope', (req, res) => {
     res.render('index');
+});
+
+app.get('/student/info', (req, res) => {
+    res.render('student_info');
 });
 
 app.get('/API/GRADES', (req, res) => {
@@ -44,6 +54,10 @@ app.get('/API/SCHEDULE', (req, res) => {
 
 app.get('/API/LETTERS', (req, res) => {
     res.send(temp_letters)
+})
+
+app.get('/API/SUBJECT_BY_USER', (req, res) => {
+    res.send(temp_subjects)
 })
 
 const server = app.listen(3010, () => {
