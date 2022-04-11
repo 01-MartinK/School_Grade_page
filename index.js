@@ -120,6 +120,10 @@ app.get('/', (req, res) => {
     res.render('index');
 });
 
+// render school page
+app.get('/school', (req, res) => {
+    res.render('schoolPage');
+});
 app.get('/API/GRADES', (req, res) => {
     res.send(temp_grades)
 })
