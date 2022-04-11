@@ -15,7 +15,7 @@ app.use(express.static(__dirname + '/public'))
 
 // render default page
 app.get('/student/kutseope', (req, res) => {
-    res.render('index');
+    res.render('student');
 });
 
 app.get('/student/info', (req, res) => {
