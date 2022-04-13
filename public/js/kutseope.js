@@ -125,26 +125,26 @@ async function genLeaderboard() {
     const leaderboard = document.querySelector('.leaderboardList')
     let lessons
     let html = ""
-    let allGrade = [
-        {
-            sessionId: 0, grades: '', grades_together: 0, avg: 0
-        }
-    ]
+    let grades = ''
+    let avg = 0
+    let grades_together = 0
     let count = 0
     const localId = localStorage.getItem("sessionId")
-    const data = { sessionId: 1 };
-    grades = await (await fetch('http://localhost:3010/API/ALLGRADES')).json()
+    const data = { sessionId: localId };
+    grades = await (await fetch('http://localhost:3010/API/GRADES', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+
+    })).json()
         .then(result => {
             result.forEach(element => {
-                let avg = 0
-                let grades_together = 0
                 element.grades.forEach(grade => {
                     avg += grade
                     grades_together += 1
                 })
-                addToGrade = {
-                    sessionId: element.sessionId, grades: element.grades, grades_together: 0, avg: avg
-                }
             });
             avg = Math.round(avg / grades_together)
         })
