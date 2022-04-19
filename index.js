@@ -177,6 +177,9 @@ app.post('/API/ADMIN/STUDENTS', requireAdmin, (req, res) => {
     let temp_admin = users.filter((user) => user.isAdmin === false);
     res.send(temp_admin)
 })
+app.post('/API/ADMIN/CHECK', requireAdmin, (req, res) => {
+    res.send({admin: true})
+})
 app.delete('/API/ADMIN/STUDENTS', requireAdmin, (req, res) => {
     users = users.filter((user) => user.name !== req.body.name);
     let temp_admin = users.filter((user) => user.isAdmin === false && user.name !== req.body.name);
