@@ -5,7 +5,7 @@ const cors = require('cors')
 const app = express();
 app.use(cors())        // Avoid CORS errors in browsers
 app.use(express.json()) // Populate req.body
-const users = [
+let users = [
     {personalId: '0', name: "Admin Teacher", password: "Pass", isAdmin: true, email: 'Admin', school: 'Admin School'},
     {personalId: '1', name: "Kevin Hartman", password: "Pass", isAdmin: false, email: 'User', school: 'User School'},
     {personalId: '2', name: "Teacher", password: "Pass", isAdmin: true, email: 'Teacher', school: 'Teacher School'}
@@ -178,7 +178,7 @@ app.post('/API/ADMIN/STUDENTS', requireAdmin, (req, res) => {
     res.send(temp_admin)
 })
 app.delete('/API/ADMIN/STUDENTS', requireAdmin, (req, res) => {
-    times = times.filter((time) => time.id !== req.body.name);
+    users = users.filter((user) => user.name !== req.body.name);
     let temp_admin = users.filter((user) => user.isAdmin === false && user.name !== req.body.name);
     res.send(temp_admin)
 })

@@ -13,7 +13,7 @@ async function genStudents() {
         .then(result => {
             result.forEach(element => {
                     html += `<div class="students">
-                        <h5>${element.name}</h5><button onclick="failStudent('${element.name}', this)">Läbikukkuta</button>
+                        <h5>${element.name}</h5><button onclick="failStudent('${element.name}', this)">Läbi kukkuda</button>
                 </div>`
             });
         })
