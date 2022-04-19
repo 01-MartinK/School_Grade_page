@@ -1,3 +1,8 @@
+* {
+    padding: 0;
+    margin: 0;
+}
+
 body {
     background-color: gainsboro;
 }
@@ -142,43 +147,38 @@ body {
     gap: 2em;
 }
 
-.students:first-child {
-    border-top: none;
+.students .student {
+    padding: 1em;
+    border-bottom: 2px solid gainsboro;
 }
 
-.students {
-    padding: 0.25em;
-    border-top: 2px solid gainsboro;
-}
-
-.students .extra {
+.students .student .info {
     display: flex;
-    gap: 2em;
-}
-.teachers:first-child {
-    border-top: none;
+    align-items: center;
+    gap: 1em;
 }
 
-.teachers {
-    padding: 0.25em;
-    border-top: 2px solid gainsboro;
+.subjects .subject {
+    padding: 1em;
+    height: 4em;
+    border-bottom: 2px solid gainsboro;
 }
 
-.teachers .extra {
-    display: flex;
-    gap: 2em;
+.subjects .subject h3 {
+    float: left;
 }
 
-.subjects:first-child {
-    border-top: none;
+.subjects .subject .btn {
+    float: right;
 }
 
-.subjects {
-    padding: 0.25em;
-    border-top: 2px solid gainsboro;
-}
-
-.subjects .extra {
-    display: flex;
-    gap: 2em;
+.student_info {
+    display: block;
+    position: absolute;
+    top: 100%;
+    background-color: white;
+    width: 24em;
+    height: 24em;
+    padding: 1em;
+    border-radius: 8px;
 }

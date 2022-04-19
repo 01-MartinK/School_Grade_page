@@ -2,11 +2,16 @@ const express = require('express');
 
 const router = express.Router();
 
+
 const temp_grades = [
-    { subject: "Matemaatika", grades: [3, 2, 4, 3, 4, 4, 3, 5, 4] },
-    { subject: "Keemia", grades: [4, 4, 5, 5, 5, 5, 5] },
-    { subject: "Bioloogia", grades: [4, 5, 4, 5, 5, 5, 3, 4, 5] },
+    { personalId: '1', subject: "Mathematics", grades: [3, 2, 4, 3, 4, 4, 3, 5, 4] },
+    { personalId: '1', subject: "Matemaatika", grades: [3, 2, 4, 3, 4, 4, 3, 5, 4] },
+    { personalId: '1', subject: "Drugate", grades: [4, 4, 5, 5, 5, 5, 5] },
+    { personalId: '1', subject: "Keemia", grades: [4, 4, 5, 5, 5, 5, 5] },
+    { personalId: '1', subject: "Biology", grades: [4, 5, 4, 5, 5, 5, 3, 4, 5] },
+    { personalId: '1', subject: "Bioloogia", grades: [4, 5, 4, 5, 5, 5, 3, 4, 5] },
 ]
+
 
 const temp_classes = [
     { name: "Proga", time: "14.00-16.00", subjects: ["math", "programming"], teacher: "Margit Mägi" },
@@ -57,6 +62,11 @@ router.get('/EXTRA_CLASSES', (req, res) => {
 
 router.get('/TEACHERS', (req, res) => {
     res.send(teachers)
+})
+
+router.post('/GRADES', (req, res) => {
+    let temp_grades2 = temp_grades.filter((grade) => grade.personalId === (req.body.sessionId));
+    res.send(temp_grades2)
 })
 
 module.exports = router;

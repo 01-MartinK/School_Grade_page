@@ -9,13 +9,13 @@ async function genGrades() {
     const localId = localStorage.getItem("sessionId")
     const data = { sessionId: localId };
     grades = await (await fetch('http://localhost:3010/API/GRADES', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data),
 
-    })).json()
+        })).json()
         .then(result => {
             result.forEach(element => {
                 grades += `<p class="sub">${element.subject}</p>`
