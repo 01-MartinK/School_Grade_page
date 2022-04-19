@@ -121,7 +121,6 @@ async function genLetter() {
         })
 }
 
-
 async function genLeaderboard() {
     const leaderboard = document.querySelector('.leaderboardList')
     let lessons
@@ -133,13 +132,13 @@ async function genLeaderboard() {
     const localId = localStorage.getItem("sessionId")
     const data = { sessionId: localId };
     grades = await (await fetch('http://localhost:3010/API/GRADES', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(data),
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
 
-        })).json()
+    })).json()
         .then(result => {
             result.forEach(element => {
                 element.grades.forEach(grade => {
@@ -187,14 +186,12 @@ function showH() {
     document.querySelector(".schedule").classList.add("d-none")
     document.querySelector(".diary").classList.add("d-none")
     document.querySelector(".leaderboard").classList.add("d-none")
-
 }
 
 function showTp() {
     document.querySelector("#hBtn").classList.remove("active")
     document.querySelector("#pBtn").classList.remove("active")
     document.querySelector("#tpBtn").classList.add("active")
-
     document.querySelector("#lBtn").classList.remove("active")
     document.querySelector(".grades").classList.add("d-none")
     document.querySelector(".schedule").classList.remove("d-none")

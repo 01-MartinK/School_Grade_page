@@ -1,0 +1,20 @@
+extends default 
+
+block content 
+    .cont
+        .main-panel.bg-white
+            .split
+                .upper
+                    ul
+                        li 
+                            button(onclick="showSs()").active#SsBtn Students
+                        li 
+                            button(onclick="showTt()")#TtBtn Teachers
+                            li
+                                button(onclick="showSss()")#SssBtn Subjects
+                    hr
+                .lower
+                    include modules/_module_students
+                    include modules/_module_teachers
+                    include modules/_module_subjects
+        script(src="/js/admin.js")
