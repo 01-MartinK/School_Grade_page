@@ -1,0 +1,32 @@
+extends ../default 
+
+block content 
+    .student_info
+        h3 Margit Mägi 
+        h4 Programmeerimine 
+        .hinded 
+            .hinde_nimekiri 
+                h5 Keemia 
+                h6 3 4 5 5 4 5 3
+            .hinde_nimekiri 
+                h5 Keemia 
+                h6 3 4 5 5 4 5 3
+        .footer 
+            button.btn.btn-secondary close
+    .cont
+        .main-panel.bg-white
+            .split
+                .upper
+                    ul
+                        li 
+                            button(onclick="showO()").active#tpBtn Õpilased 
+                        li 
+                            button(onclick="showT()")#pBtn Tunnid
+                    hr
+                .lower
+                    include modules/_students_module
+                    include modules/_subject_module
+        script(src="/js/teacher.js")
+ 
+        
+                 

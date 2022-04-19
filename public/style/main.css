@@ -1,3 +1,8 @@
+* {
+    padding: 0;
+    margin: 0;
+}
+
 body {
     background-color: gainsboro;
 }
@@ -149,4 +154,40 @@ body {
 .leaderboard .extra {
     display: flex;
     gap: 2em;
+}
+
+.students .student {
+    padding: 1em;
+    border-bottom: 2px solid gainsboro;
+}
+
+.students .student .info {
+    display: flex;
+    align-items: center;
+    gap: 1em;
+}
+
+.subjects .subject {
+    padding: 1em;
+    height: 4em;
+    border-bottom: 2px solid gainsboro;
+}
+
+.subjects .subject h3 {
+    float: left;
+}
+
+.subjects .subject .btn {
+    float: right;
+}
+
+.student_info {
+    display: block;
+    position: absolute;
+    top: 100%;
+    background-color: white;
+    width: 24em;
+    height: 24em;
+    padding: 1em;
+    border-radius: 8px;
 }
