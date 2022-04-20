@@ -1,0 +1,58 @@
+CREATE TABLE KOOLID(
+    ID INT NOT NULL AUTO_INCREMENT,
+    nimi VARCHAR(255),
+    lisaAined JSON,
+    PRIMARY KEY(ID)
+);
+
+CREATE TABLE KLASSID(
+    ID INT NOT NULL AUTO_INCREMENT,
+    nimi VARCHAR(255) NOT NULL,
+    ajakava JSON,
+    kirjad JSON,
+    ained JSON,
+    PRIMARY KEY(ID)
+);
+
+CREATE TABLE OPILASED(
+    ID INT NOT NULL AUTO_INCREMENT,
+    nimi VARCHAR(255) NOT NULL,
+    perenimi VARCHAR(255) NOT NULL,
+    kood INT NOT NULL,
+    hinded JSON,
+    koolID INT,
+    klass INT,
+    PRIMARY KEY(ID),
+    FOREIGN KEY(koolID) REFERENCES KOOLID(ID),
+    FOREIGN KEY(klass) REFERENCES KLASSID(ID)
+);
+
+CREATE TABLE OPETAJAD(
+    ID INT NOT NULL AUTO_INCREMENT,
+    kood INT NOT NULL,
+    nimi VARCHAR(255) NOT NULL,
+    perenimi VARCHAR(255) NOT NULL,
+    ained JSON,
+    koolID INT,
+    PRIMARY KEY(ID),
+    FOREIGN KEY(koolID) REFERENCES KOOLID(ID)
+);
+
+INSERT INTO OPETAJAD (kood,nimi,perenimi,ained,koolID)
+VALUES
+	(1111111111,'Margit','Mägi','{"ained":["Matemaatika","Keemia"]}',1),
+	(1234567890,'Evely','Raid','{"ained":["Programeetimine","Keemia"]}',1),
+	(0987654321,'Kevin','Hartman','{"ained":["Bioloogia","Eesti keel"]}',2);
+
+
+INSERT INTO KOOLID (nimi,lisaAined)
+VALUES
+	("Jaak peterson ülenurme Pensilvaania", '{"ained":["Laboratoorium","Rakse füüsika"]}'),
+	("VOCO", '{"ained":["Rakse füüsika","Rakse Keemia"]}');
+
+
+INSERT INTO KLASSID (nimi, ajakava, kirjad, ained)
+VALUES
+	("Füsihist",{"kellaaeg":["8.30-11.45","12.30-14.00","14.12-15.24","15.30-17.20"],"ained":[1,2,2,4]},{"kirjad":["adsasdasdasdaslk"]},{"ained":["Matemaatika","Füüsika","Bioloogia","Eesti keel"]}),
+    ("Biologist"),
+	("Noorem arendaja");
