@@ -19,7 +19,10 @@ CREATE TABLE OPILASED(
     nimi VARCHAR(255) NOT NULL,
     perenimi VARCHAR(255) NOT NULL,
     kood INT NOT NULL,
+<<<<<<< HEAD
     password STRING NOT NULL,
+=======
+>>>>>>> 9c560794404af1c057739a6d9eaa7be0b0d770fe
     hinded JSON,
     koolID INT,
     klass INT,
@@ -28,6 +31,7 @@ CREATE TABLE OPILASED(
     FOREIGN KEY(klass) REFERENCES KLASSID(ID)
 );
 
+<<<<<<< HEAD
 INSERT INTO OPILASED (nimi, perenimi, kood, password, hinded, koolID, klass)
 VALUES
     ('Kevin, 'Hartman', '11111111111', 'Macdonalts', '{"ained":[1,4],"hinded":[554535,443345]}', '1', 'Java Arendaja')
@@ -36,6 +40,11 @@ CREATE TABLE OPETAJAD(
     ID INT NOT NULL AUTO_INCREMENT,
     kood INT NOT NULL,
     password STRING NOT NULL,
+=======
+CREATE TABLE OPETAJAD(
+    ID INT NOT NULL AUTO_INCREMENT,
+    kood INT NOT NULL,
+>>>>>>> 9c560794404af1c057739a6d9eaa7be0b0d770fe
     nimi VARCHAR(255) NOT NULL,
     perenimi VARCHAR(255) NOT NULL,
     ained JSON,
@@ -46,9 +55,15 @@ CREATE TABLE OPETAJAD(
 
 INSERT INTO OPETAJAD (kood,nimi,perenimi,ained,koolID)
 VALUES
+<<<<<<< HEAD
 	(1111111111,'Margit','Mägi','["Matemaatika","Keemia"]',1),
 	(1234567890,'Evely','Raid','["Programmeerimine","Keemia"]',1),
 	(0987654321,'Kevin','Hartman','["Bioloogia","Eesti keel"]',2);
+=======
+	(1111111111,'Margit','Mägi','{"ained":["Matemaatika","Keemia"]}',1),
+	(1234567890,'Evely','Raid','{"ained":["Programeetimine","Keemia"]}',1),
+	(0987654321,'Kevin','Hartman','{"ained":["Bioloogia","Eesti keel"]}',2);
+>>>>>>> 9c560794404af1c057739a6d9eaa7be0b0d770fe
 
 
 INSERT INTO KOOLID (nimi,lisaAined)
@@ -59,4 +74,10 @@ VALUES
 
 INSERT INTO KLASSID (nimi, ajakava, kirjad, ained)
 VALUES
+<<<<<<< HEAD
     ("Java arendaja",'{"kellaaeg":["8.30-11.45","12.30-14.00","14.12-15.24","15.30-17.20"],"ained":[3,3,2,1]}','["Mata tegematta","loll oled vä"]','{"ained":["Matemaatika","Füüsika","Programmeerimine","Eesti keel"]}');
+=======
+	("Füsihist",{"kellaaeg":["8.30-11.45","12.30-14.00","14.12-15.24","15.30-17.20"],"ained":[1,2,2,4]},{"kirjad":["adsasdasdasdaslk"]},{"ained":["Matemaatika","Füüsika","Bioloogia","Eesti keel"]}),
+    ("Biologist"),
+	("Noorem arendaja");
+>>>>>>> 9c560794404af1c057739a6d9eaa7be0b0d770fe
