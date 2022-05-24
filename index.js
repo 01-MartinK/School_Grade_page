@@ -7,7 +7,7 @@ app.use(cors()) // Avoid CORS errors in browsers
 app.use(express.json()) // Populate req.body
 let users = [
     { personalId: '0', name: "Admin Teacher", password: "Pass", isAdmin: true, email: 'Admin', school: 'Admin School' },
-    { personalId: '1', name: "Kevin Hartman", password: "Pass", isAdmin: false, email: 'User', school: 'User School' },
+    { personalId: '1', name: "Kevin Hartman", password: "Pass", isAdmin: false, email: 'User', school: 'VOCO', eriala: 'Java arendaja' },
     { personalId: '2', name: "Teacher", password: "Pass", isAdmin: true, email: 'Teacher', school: 'Teacher School' }
 ]
 
@@ -111,6 +111,7 @@ app.set('view engine', 'pug');
 // serve static files from the `public` folder
 app.use(express.static(__dirname + '/public'))
 
+/*
 app.get('/student/kutseope', (req, res) => {
     res.render('student');
 });
@@ -164,13 +165,22 @@ app.post('/API/ADMIN/SUBJECTS', requireAdmin, (req, res) => {
 app.get('/admin', (req, res) => {
     res.render('admin');
 });
-app.get('/', (req, res) => {
-    res.render('index')
-})
 
 app.get('/teacher', (req, res) => {
     res.render('teacher/teacherMain')
 })
+*/
+
+app.get('/', (req, res) => {
+    res.render('index')
+})
+app.get('/student/info', (req, res) => {
+    res.render('student_info')
+})
+
+app.get('/student/kutseope', (req, res) => {
+    res.render('student');
+});
 
 const APIRouter = require('./routers/api');
 const TeacherAPIRouter = require('./routers/teacher/teacherApi');

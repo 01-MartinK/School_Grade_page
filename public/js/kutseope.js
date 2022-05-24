@@ -49,7 +49,6 @@ async function genGrades() {
     const subject_list = document.querySelector('.classesList')
     await (await fetch('http://localhost:3010/API/SUBJECT_BY_USER')).json()
         .then(result => {
-            console.log(result)
             result.forEach(element => {
                 if (element.progress == "läbikukkunud") {
                     html += `
@@ -83,15 +82,19 @@ async function genSchedule() {
 
     schedule = await (await fetch('http://localhost:3010/API/SCHEDULE')).json()
         .then(result => {
-            result.forEach(element => {
+            console.log(result)
+            let ained = JSON.parse(result[0].ained)
+            let kellaaeg = JSON.parse(result[0].ajakava).kellaaeg
+            let b = JSON.parse(result[0].ajakava).ained
+
+            b.forEach(number => {
                 html += `<div class="class">
                     <div class="info">
-                        <h3>${element.name}</h3>
-                        <h6>${element.subjects}</h6>
+                        <h3>${ained.ained[number-1]}</h3>
                     </div>
                     <div class="info2">
-                        <p>${element.time}</p>
-                        <p>${element.teacher}</p>
+                        <p>${kellaaeg[number-1]}</p>
+                        <p>${number}</p>
                     </div>
                 </div>`
             })
@@ -107,13 +110,12 @@ async function genLetter() {
 
     letters = await (await fetch('http://localhost:3010/API/LETTERS')).json()
         .then(result => {
-            result.forEach(element => {
-                console.log(result)
+            console.log(result)
+            result.kirjad.forEach(element => {
                 html += `<div class="diary">
-                        <h5>${element.text}</h5>
+                        <h5>${element}</h5>
                         <div class="extra">
                             <p>${element.class}</p>
-                            <p>${element.teacher}</p>
                         </div>
                 </div>`
             })
@@ -132,13 +134,13 @@ async function genLeaderboard() {
     const localId = localStorage.getItem("sessionId")
     const data = { sessionId: localId };
     grades = await (await fetch('http://localhost:3010/API/GRADES', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data),
 
-    })).json()
+        })).json()
         .then(result => {
             result.forEach(element => {
                 element.grades.forEach(grade => {
@@ -151,7 +153,6 @@ async function genLeaderboard() {
     lessons = await (await fetch('http://localhost:3010/API/LEADERBOARD')).json()
         .then(result => {
             result.forEach(element => {
-                console.log(result)
                 count += 1
                 html += `<div class="leaderboard">
                         ${count}.

@@ -19,13 +19,16 @@ async function genExtraClasses() {
     let html = '';
     await (await fetch('http://localhost:3010/API/EXTRA_CLASSES')).json()
         .then(result => {
-            result.forEach(element => {
+            console.log(result[0].lisaAined)
+            let b = JSON.parse(result[0].lisaAined).ained
+            console.log(b)
+            b.forEach(element => {
                 html += `<div class="class">
-                    <h5>${element.name}</h5>
+                    <h5>${element}</h5>
                     <h6>${element.opetaja}</h6>
-                    <h6>${element.aeg}</h6>
                     <button class="btn btn-info btn-outline-dark">Liitu</h1>
-                </div>`
+                </div>
+                <br>`
             });
             document.querySelector('.classesList').innerHTML = html
         })
@@ -33,18 +36,24 @@ async function genExtraClasses() {
 
 async function getTeachers() {
     let html = '';
+    let ained = '';
     await (await fetch('http://localhost:3010/API/TEACHERS')).json()
         .then(result => {
             result.forEach(element => {
+                JSON.parse(element.ained).forEach(aine => {
+                    ained += `${aine}, `
+                })
                 html += `<div class="opetaja card card-body">
-                    <h3 class="card-title">${element.name}</h3>
+                    <h3 class="card-title">${element.nimi}</h3>
                     <div class="ained card-text">
-                        <h4>${element.ained}</h4>
-                        <h5>${element.klass}</h4>
+                        <h6>
+                        ${ained}
+                        </h6>  
                     </div>
                 </div>`
+                ained = ''
             });
-            document.querySelector('.opetajaNimekiri').innerHTML = html
+            document.querySelector('.teachersList').innerHTML = html
         })
 }
 
